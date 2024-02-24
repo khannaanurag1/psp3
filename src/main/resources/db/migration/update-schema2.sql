@@ -1,0 +1,2 @@
+ALTER TABLE tab
+    ADD count INT NOT NULL;

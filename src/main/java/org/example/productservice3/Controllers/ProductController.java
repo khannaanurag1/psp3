@@ -27,7 +27,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> GetProduct(@PathVariable Long id) {
+    public ResponseEntity<Product> GetProduct(@PathVariable Long id)  {
         try {
             MultiValueMap<String,String> headers = new LinkedMultiValueMap<>();
             headers.add("calledBy","StupidFrontendEngineer");

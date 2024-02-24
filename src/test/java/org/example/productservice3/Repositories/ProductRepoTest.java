@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -104,5 +106,38 @@ class ProductRepoTest {
 //                System.out.println(product.getId());
 //            }
         }
+    }
+
+    @Test
+    @Transactional
+    //@Rollback(value = false)
+    void testcaseForShowingHowJPAGeneratesQueries() {
+        //-------------USE OF OPTIONAL OR NOT--------------------
+        //Optional<Product> product = productRepo.findProductById(1L);
+        //Optional<Product> product = productRepo.findProductById(2L);
+        //if(product.isPresent()) {
+        //    System.out.println(product.get().getTitle());
+        //}
+
+        //----------BETWEEN CLAUSE-----------
+        //List<Product> products = productRepo.findProductByPriceBetween(250,2500);
+
+        //List<Product> products = productRepo.findByPrice(1234D);
+
+        //------------BOOLEAN VARIABLES--------------
+        //List<Product> products = productRepo.findAllByIsSpecialFalse();
+        //List<Product> products = productRepo.findAllByIsSpecial(false);
+
+        //----------------ORDERBY CLAUSE--------------
+        //List<Product> products = productRepo.findAllOrderByIdDesc(); -- will error out
+        //List<Product> products = productRepo.findAllByOrderByIdDesc();
+        //List<Product> products = productRepo.findAllByOrderByPriceDesc();
+        //List<Product> products = productRepo.findByIdIsNotNullOrderByPrice();
+
+        //----------------Test CUSTOM Query----------------
+        //String name = productRepo.getProductNameFromId(2L);
+        //String name = productRepo.getCategoryNameFromProductId(2L);
+        System.out.println("debug");
+
     }
 }

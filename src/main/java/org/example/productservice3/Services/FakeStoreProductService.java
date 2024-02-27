@@ -5,6 +5,7 @@ import org.example.productservice3.Clients.FakeStore.Dtos.FakeStoreClientProduct
 import org.example.productservice3.Models.Category;
 import org.example.productservice3.Models.Product;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -17,6 +18,8 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
+//@Service
+//@Primary
 public class FakeStoreProductService implements IProductService {
     RestTemplateBuilder restTemplateBuilder;
     FakeStoreApiClient fakeStoreApiClient;

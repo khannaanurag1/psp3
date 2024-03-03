@@ -1,6 +1,5 @@
 package org.example.productservice3.Services;
 
-import org.example.productservice3.Daos.ProductDao;
 import org.example.productservice3.Models.Category;
 import org.example.productservice3.Models.Product;
 import org.example.productservice3.Repositories.ProductRepo;
@@ -41,18 +40,5 @@ public class StorageProductService implements IProductService {
     @Override
     public String deleteProduct(Long id) {
         return null;
-    }
-
-    private Product getProduct(ProductDao productDao) {
-        Product product = new Product();
-        product.setId(productDao.getId());
-        product.setTitle(productDao.getTitle());
-        product.setDescription(productDao.getDescription());
-        product.setPrice(productDao.getPrice());
-        Category category = new Category();
-        category.setId(productDao.getCategoryId());
-        product.setCategory(category);
-        product.setImageUrl(productDao.getImageUrl());
-        return product;
     }
 }

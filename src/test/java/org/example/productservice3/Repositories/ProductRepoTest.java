@@ -114,10 +114,10 @@ class ProductRepoTest {
     void testcaseForShowingHowJPAGeneratesQueries() {
         //-------------USE OF OPTIONAL OR NOT--------------------
         //Optional<Product> product = productRepo.findProductById(1L);
-        //Optional<Product> product = productRepo.findProductById(2L);
-        //if(product.isPresent()) {
-        //    System.out.println(product.get().getTitle());
-        //}
+        Optional<Product> product = productRepo.findProductById(2L);
+        if(product.isPresent()) {
+            System.out.println(product.get().getTitle());
+        }
 
         //----------BETWEEN CLAUSE-----------
         //List<Product> products = productRepo.findProductByPriceBetween(250,2500);

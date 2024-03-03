@@ -1,5 +1,6 @@
 package org.example.productservice3.Repositories;
 
+import org.example.productservice3.Daos.ProductDao;
 import org.example.productservice3.Models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

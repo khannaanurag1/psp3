@@ -1,5 +1,7 @@
 package org.example.productservice3.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ser.Serializers;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -26,8 +28,9 @@ public class Category extends BaseModel {
     //Otherwise category in Product class is more than enough , as we put one on many side in
     //cardinality
     @OneToMany(mappedBy = "category")
-    @Fetch(FetchMode.SELECT)
-    @BatchSize(size=2)
+    @JsonBackReference
+    //@Fetch(FetchMode.SELECT)
+    //@BatchSize(size=2)
     //@OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
     //following lazy by default
     private List<Product> products;

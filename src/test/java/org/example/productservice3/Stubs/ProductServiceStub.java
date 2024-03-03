@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service
+//@Service
 public class ProductServiceStub implements IProductService {
     Map<Long,Product> products;
 
@@ -34,7 +34,8 @@ public class ProductServiceStub implements IProductService {
 
     @Override
     public Product updateProduct(Product product, Long productId) {
-        return null;
+        products.put(productId,product);
+        return products.get(productId);
     }
 
     @Override

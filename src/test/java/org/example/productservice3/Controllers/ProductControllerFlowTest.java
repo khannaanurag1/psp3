@@ -33,9 +33,16 @@ public class ProductControllerFlowTest {
         //Arrange
         productController.createProduct(productDto);
         ResponseEntity<Product> productResponseEntity = productController.GetProduct(1L);
+        productDto.setTitle("ABCD");
+        productDto.setPrice(10000.00);
+        productController.updateProduct(1L,productDto);
+        ResponseEntity<Product> productResponseEntity2 = productController.GetProduct(1L);
+
 
         //Assert
         assertEquals("ABC",productResponseEntity.getBody().getTitle());
+        assertEquals("ABCD",productResponseEntity2.getBody().getTitle());
+        assertEquals(10000.0,productResponseEntity2.getBody().getPrice());
         assertEquals("ABCDEF",productResponseEntity.getBody().getDescription());
     }
 }

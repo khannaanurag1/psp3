@@ -10,7 +10,7 @@ public class RandomTest {
 //        testRandomNumber();
 //    }
 
-    @Test
+    //@Test
     public void testRandomNumber_FlakyTest() {
         Random random = new Random();
         int n = random.nextInt(10);

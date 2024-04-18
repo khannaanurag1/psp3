@@ -1,0 +1,157 @@
+How should we figure out, how to install jpa and jdbc ?
+  -> searching on net
+
+Let's search "spring jpa mysql" on google and pick first link - https://spring.io/guides/gs/accessing-data-mysql
+
+let's follow steps -
+
+You should have mysql and mysql-workbench installed
+
+let's create a database
+    -> open terminal
+    -> mysqlu - root,12345
+    -> show databases;
+    -> create database productservice_april2024
+    -> use database productservice_april2024
+
+we already have application.properties file in resources folder. This is like config
+
+Let's copy paste these in file.
+
+datasource.url  = jdbc:mysql://localhost:3306/productservice_april2024
+datasource.username = root
+datasource.passowrd = 12345
+
+Do you see this depdency in red ? That means something is missing
+
+Let's add these depdencies
+
+search "maven spring jpa"
+open first link - https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa
+
+and copy latest depdency 3.2.5
+
+where should i add this depdency ? ->  pom-pom -> pom.xml
+
+let's add mysql jdbc connector as well
+
+search on google "maven mysql jdbc connector"
+
+open first link - https://mvnrepository.com/artifact/mysql/mysql-connector-java
+
+go to mysql-connector-j and copy latest 8.3.0
+
+add to pom.xml
+
+Let's do maven reload
+
+------------------------------------------------------
+
+Which Entities do I have in my project ?
+            -> Product and Category
+
+            -> Let's add that annotation @Entity over these classes
+
+            -> This will help ORM/JPA understand that a table need to be created for this class
+
+Now every table should have what ?
+            -> Primary Key
+
+            -> But how will orm get to know that this id in basemodel should be treated as primary key in category and product ?
+
+            -> Let's add annotation at top of id as well
+                  @Id
+                  @GeneratedValue(strategy=GenerationType.Auto)
+
+            -> Link - https://www.baeldung.com/hibernate-identifiers
+
+            ->  GeneratedValue is used for automatically generating primary key value. This can use four generation types: AUTO, IDENTITY, SEQUENCE and TABLE.
+
+            -> GenerationType.Auto will tell hibernate to choose appropriate generation strategy based on database usage
+
+            -> We will cover this in coming class, dw
+
+Now do we want to create jpa/orm to create table for BaseModel ever ?
+            -> So we will add something like @MappedSuperclass. It will tell jpa/orm to not create a separate table for basemodel, rather add these fields of basemodel in product and controller, because those are inheriting from this basemodel.
+
+            -> We will have one dedicated class for Implementing Inheritance in JPA.
+
+            -> We will cover this mappedsuperclass in that.
+
+
+Now we have category in Product and List<Product> in Category. Do you want JPA to consider this relation twice ?              -> No
+
+               -> We want, product table should have categoryId as field that's it. Right ?
+
+               -> Let's do changes for that
+
+               -> In PRODUCT class
+
+               -> While putting annotation , always consider , class to field  relation , so what is relation of product to category ?
+                           -> @ManyToOne(Cascade = CascadeType.ALL)
+
+               -> What this cascade will do ?
+
+               -> Do we want, whenever we create add any new product in products table, a row for category also gets added in category table if that category is not there in that table already ?
+
+
+
+               -> In CATEGORY Class
+
+               -> Let's add @OneToMany(mappedBy = "category") here on products
+
+               -> with this mapped by, we are telling jpa/orm that , please consider relation between product and category only once, which is represented by field "category" in products class.
+
+               -> so this "category" is field name in Product class.
+
+
+------------------------------------------------------
+
+Let's configure our datasource at right
+
+we will add username , password and source url
+
+-------------------------------------------------------
+
+BUILD
+
+Let's build this now and see if we get lucky
+
+
+Hikari is a JDBC DataSource implementation that provides a connection pooling mechanism. Compared to other implementations, it promises to be lightweight and better performing.
+
+A connection pool is a cache of database connections maintained so that the connections can be reused when future requests to the database are required. Connection pools are used to enhance the performance of executing commands on a database.
+
+
+-------------------------------------------------------
+
+BREAK
+
+-------------------------------------------------------
+
+Now, will we use our fakestoreservice ?
+
+No, right - we will create our own storageproductservice which will be reading from Repo/DAO Layer
+
+Add @service in it.
+
+Let's go to ProductController and see if everything is fine there.
+
+Remove @service from fakestoreproductservice
+
+Now our storageproductservice will get data from ?
+              -> Repo/DAO
+
+Do we have Repositories folder ? -> No
+      -> Let's create it and add file ProductRepository
+
+@Repository
+public interface ProductRepository extends JpaRepository<Product,Long> {
+
+	public Product save(Product);
+}
+
+Now let's add this as depdency in storageproductservice
+and implement createProduct method and call make request on postman
+      -> Show product and category table in Intellij that rows got created
+
